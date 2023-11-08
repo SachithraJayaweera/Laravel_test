@@ -12,7 +12,7 @@
         <a href="{{ route('territory') }}" class="btn btn-primary" style="background-color: green; border: none; margin-top:20px; padding:15px">Go to Terrytory</a>
         <a href="{{ route('adduser') }}" class="btn btn-primary" style="background-color: green; border: none; margin-top:20px; padding:15px">Go to AddUser</a>
         <a href="{{ route('addsku') }}" class="btn btn-primary" style="background-color: green; border: none; margin-top:20px; padding:15px">Go to AddSKU</a>
-        <a href="{{ route('addpo') }}" class="btn btn-primary" style="background-color: green; border: none; margin-top:20px; padding:15px">Go to Add PO</a>
+        {{-- <a href="{{ route('addpo') }}" class="btn btn-primary" style="background-color: green; border: none; margin-top:20px; padding:15px">Go to Add PO</a> --}}
         <a href="{{ route('viewpo') }}" class="btn btn-primary" style="background-color: green; border: none; margin-top:20px; padding:15px">Go to View PO</a>
             
     </div>
