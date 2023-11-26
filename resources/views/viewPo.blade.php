@@ -77,6 +77,7 @@
                             <td><button type="button" class="btn-primary" onclick="alert('Button clicked!')" style="background-color: green; border: none;">VIEW</button></td>
                         </tr>
                         @endforeach
+                        
                     </tbody>
     
                 </table>

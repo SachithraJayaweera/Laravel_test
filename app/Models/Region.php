@@ -9,7 +9,8 @@ class Region extends Model
 {
     use HasFactory;
     protected $fillable = [
-        "zone","zone_code","region_name"
+        "zone", "region_name"
     ];
-    
+
+    protected $primaryKey = "region_code";
 }

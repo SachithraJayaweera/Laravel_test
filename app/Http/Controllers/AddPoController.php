@@ -8,6 +8,7 @@ use App\Models\AddSku;
 use App\Models\AddZone;
 use App\Models\Region;
 use App\Models\Territory;
+use App\Models\AddUser;
 
 class AddPoController extends Controller
 {
@@ -21,7 +22,8 @@ class AddPoController extends Controller
         $zones = AddZone::all();
         $regions = Region::all();
         $territory = Territory::all();
-        return view('addpo',['items'=> $items,'zones'=>$zones,'regions'=> $regions, 'territory'=>$territory]);
+        $user = AddUser::all();
+        return view('addpo',['items'=> $items,'zones'=>$zones,'regions'=> $regions, 'territory'=>$territory, 'user'=> $user]);
     }
 
 

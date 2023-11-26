@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text("distributor");
             $table->date("date");
             $table->text("remark");
-            $table->$table->decimal('totalSum', 10, 2)->default(0.00);
+            $table->decimal('totalSum', 10, 2)->default(0.00);
             $table->timestamps();
         });
 

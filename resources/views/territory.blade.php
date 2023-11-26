@@ -23,9 +23,11 @@
         @foreach ($regions as $regions)
         <option>{{ $regions->region_name}}</option>
         @endforeach
+        
         {{-- <option>region 1</option>
         <option>region 2</option>
         <option>region 3</option> --}}
+
       </select>
     </div>
     <div class="form-group">

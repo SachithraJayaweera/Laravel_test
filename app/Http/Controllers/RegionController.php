@@ -11,11 +11,13 @@ class RegionController extends Controller
     public function region()
     {
         $zones = AddZone::all();
-        return view('region',['zones'=> $zones]);
+        return view('region', ['zones' => $zones]);
     }
-    
-    public function save(Request $request){
+
+    public function save(Request $request)
+    {
         $result = Region::create($request->all());
         return ($result);
     }
+    
 }

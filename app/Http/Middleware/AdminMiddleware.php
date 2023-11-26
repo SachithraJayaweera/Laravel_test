@@ -28,6 +28,7 @@ class AdminMiddleware
             }else {
                 return redirect('/userhome');
             }
+            
         } else {
             return redirect('login');
         }

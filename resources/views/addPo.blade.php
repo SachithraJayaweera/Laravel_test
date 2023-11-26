@@ -46,7 +46,10 @@
         
                     <div class="form-group">
                         <label for="po-no">PO No:</label>
-                        <input type="number" name="po_no" class="form-control" id="po_no" placeholder="Automatically">
+                        {{-- <input type="number" name="po_no" class="form-control" id="po_no" placeholder="Automatically"> --}}
+                        <select class="form-control" id="po_no" name="po_no">
+                            <option>Automatically</option>
+                        </select>
                     </div>
     
                 </div>
@@ -76,10 +79,18 @@
                 <div style="margin-left: 40px;">
                     <div class="form-group">
                         <label for="distributor">Distributor:</label>
+
                         <select type="text" class="form-control" id="distributor" name="distributor" placeholder="Select">
-                            <option value="1">Distributor1</option>
-                            <option value="2">Distributor2</option>
+                            
+                            @foreach ($user as $user)
+                            <option>{{ $user->name}}</option>
+                            @endforeach
+
+                            {{-- <option value="1">Distributor1</option>
+                            <option value="2">Distributor2</option> --}}
+
                         </select>
+
                     </div>
                 </div>
             </div>

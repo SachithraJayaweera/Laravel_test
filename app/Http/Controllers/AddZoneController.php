@@ -7,6 +7,7 @@ use App\Models\AddZone;
 
 class AddZoneController extends Controller
 {
+    
     public function addZone()
     {
         return view('addzone');

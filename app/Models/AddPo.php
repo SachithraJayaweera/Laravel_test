@@ -9,6 +9,6 @@ class AddPo extends Model
 {
     use HasFactory;
     protected $fillable = [
-        "po_no","zone","region","po_territory","distributor","date","remark","totalSum"
+        "zone","region","po_territory","distributor","date","remark","totalSum"
     ];
 }

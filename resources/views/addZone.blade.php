@@ -8,6 +8,7 @@
         @csrf
         <div class="form-group">
             <label for="zoneCode">Zone Code</label>
+            
             <select class="form-control" id="zoneCode">
                 <option>Automatically</option>
             </select>

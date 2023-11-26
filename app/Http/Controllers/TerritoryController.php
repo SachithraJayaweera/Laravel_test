@@ -10,6 +10,7 @@ use App\Models\Territory;
 
 class TerritoryController extends Controller
 {
+
     public function territory()
     {
         $zones = AddZone::all();
@@ -21,5 +22,6 @@ class TerritoryController extends Controller
         $result = Territory::create($request->all());
         return ($result);
     }
+
 }
 
