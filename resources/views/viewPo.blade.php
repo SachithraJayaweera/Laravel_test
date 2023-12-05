@@ -16,7 +16,6 @@
                         @foreach ($regions as $regions)
                         <option>{{ $regions->region_name }}</option>
                         @endforeach
-    
                     </select>
                 </div>
     
@@ -67,6 +66,7 @@
                     <tbody>
     
                         @foreach($po_data as $po)
+
                         <tr>
                             <td>{{ $po["region"] }}</td>
                             <td>{{ $po["po_territory"]}}</td>
@@ -79,12 +79,76 @@
                         @endforeach
                         
                     </tbody>
-    
                 </table>
             
             </div>
-
         </form>
 
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+    $(document).ready(function () {
+    $('#region').on('change', function () {
+        var selectedRegion = $(this).val();
+
+        // Make an AJAX request to fetch filtered data
+        $.ajax({
+            url: '/filterData', // Replace with your route
+            method: 'GET',
+            data: { region: selectedRegion },
+            success: function (response) {
+                // Update table with filtered data
+                updateTable(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+
+    $('#po_territory').on('change', function () {
+        var selectedTerritory = $(this).val();
+
+        // Make an AJAX request to fetch filtered data
+        $.ajax({
+            url: '/filterDataTerritory', // Replace with your route
+            method: 'GET',
+            data: { territory: selectedTerritory },
+            success: function (response) {
+                // Update table with filtered data
+                updateTable(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+
+    
+    function updateTable(data) {
+        // Clear existing table rows
+        $('tbody').empty();
+
+        // Iterate through filtered data and append to table
+        $.each(data, function (index, po) {
+            $('tbody').append(`
+                <tr>
+                    <td>${po.region}</td>
+                    <td>${po.po_territory}</td>
+                    <td>${po.distributor}</td>
+                    <td>${po.po_no}</td>
+                    <td>${po.updated_at}</td>
+                    <td>${po.totalSum}</td>
+                    <td><button type="button" class="btn-primary" onclick="alert('Button clicked!')" style="background-color: green; border: none;">VIEW</button></td>
+                </tr>
+            `);
+        });
+    }
+    });
+
+
+    </script>
+
 @endsection

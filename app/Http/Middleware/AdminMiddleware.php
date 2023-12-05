@@ -23,7 +23,13 @@ class AdminMiddleware
                 return $next($request);
             }elseif ($request->is('addpo')) {
                 return $next($request);
+            }elseif ($request->is('addpo/save')) {
+                return $next($request);
             }elseif ($request->is('viewpo')) {
+                return $next($request);
+            }elseif ($request->is('placingorder')) {
+                return $next($request);
+            }elseif ($request->is('placingorder/save')) {
                 return $next($request);
             }else {
                 return redirect('/userhome');

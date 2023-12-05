@@ -8,8 +8,7 @@ use App\Models\Territory;
 
 class AddUserController extends Controller
 {
-    public function addUser()
-    {
+    public function addUser(){
         $territory = Territory::all();
         return view('adduser',['territory'=> $territory]);
     }
@@ -19,5 +18,6 @@ class AddUserController extends Controller
         return ($result);
     }
 
+    
     
 }

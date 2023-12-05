@@ -33,7 +33,8 @@
 
 
             <div>
-                <h1><font size = "20px">LARAVEL TEST – CEYLON LINUX (PVT) LTD</font></h1>
+                <h1><font size = "20px">LARAVEL TEST APPLICATION</font></h1>
+                
                 <br>
                 <br>
                 <div><p>you can login as admin using Email "admin@gmail.com" and password "12345678".</p></div>

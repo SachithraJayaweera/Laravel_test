@@ -11,7 +11,8 @@
 
         <a href="{{ route('addpo') }}" class="btn btn-primary" style="background-color: green; border: none; margin-top:20px; padding:15px">Go to Add PO</a>
         <a href="{{ route('viewpo') }}" class="btn btn-primary" style="background-color: green; border: none; margin-top:20px; padding:15px">Go to View PO</a>
-    
+        <a href="{{ route('placingorder') }}" class="btn btn-primary" style="background-color: green; border: none; margin-top:20px; padding:15px">Go to Placing Order</a>
+        
     </div>
     
 </div>
