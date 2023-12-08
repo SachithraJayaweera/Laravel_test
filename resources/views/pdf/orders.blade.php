@@ -53,22 +53,24 @@
                         <tbody>
         
                             @foreach($orderNumber as $order)
-    
+
                             <tr>
                                 <td>{{$order["product_name"]}}</td>
                                 <td>{{$order["product_code"]}}</td>
                                 <td>{{$order["price"]}}</td>
                                 <td>{{$order["quantity"]}}</td>
                                 <td>{{$order["free"]}}</td>
-                                <td>{{$order["amount"]}}</td>
+                                <td style="text-align: left;">{{$order["amount"]}}</td>
                             </tr>
+
                             @endforeach   
 
                         </tbody>               
                     </table>
     
                 </div>
-    
+
+
                 <div style="display: flex; flex-direction: column;">   
                     <p>Net Amount: {{ $order->net_amount}}.00</p> <br>        
                 </div> 
@@ -79,11 +81,9 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
     
-        function printPage() {
-            window.print();
-        }
+
     
-    
+
         // document.addEventListener('DOMContentLoaded', function() {
         //         var dropdown = document.getElementById('order_number');
         //         //var input1 = document.getElementById('free_product');
@@ -114,7 +114,6 @@
                 `);
             });
         }
-    
     
         $('#order_number').change(function() {
             var selected_names = $(this).find(':selected').data('names');

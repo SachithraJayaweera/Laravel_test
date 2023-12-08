@@ -23,7 +23,7 @@
                     @foreach ($skus as $sku)
 
                         @if(!in_array($sku->sku_name, array_merge($def_skus, $def_free_Issues)))
-                        <option value = "{{$sku->sku_name}}" data-price="{{$sku->distributor_price }}" data-code="{{$sku->sku_code }}">{{ $sku->sku_name}}</option>
+                        <option value = "{{$sku->sku_name}}" data-price="{{$sku->distributor_price }}" data-code="{{$sku->sku_code }}" data-weight_volume="{{$sku->weight_volume}}">{{ $sku->sku_name}}</option>
                         @endif
 
                     @endforeach
@@ -43,6 +43,13 @@
             <div class="form-group">        
                 <label for="productPrice">Product price</label>
                 <input type="text" class="form-control" id="product_price" name="product_price" placeholder="Auto Selected">
+
+            </div>
+
+
+            <div class="form-group">        
+                <label for="weight_volume">Weight Volume</label>
+                <input type="text" class="form-control" id="weight_volume" name="weight_volume" placeholder="Auto Selected">
 
             </div>
 
@@ -86,8 +93,10 @@
                 $('#pu_product').change(function() {
                     var selectedPrice = $(this).find(':selected').data('price');
                     var selectedCode = $(this).find(':selected').data('code');
+                    var selectedVolume = $(this).find(':selected').data('weight_volume');
                     $('#product_price').val(selectedPrice);
                     $('#product_code').val(selectedCode);
+                    $('#weight_volume').val(selectedVolume);
             });
         });
 

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->Text("product_price");
             $table->integer("pu_quantity");
             $table->integer("discount");
+            $table->float("weight_volume");
             $table->decimal('ratio', 8, 2)->nullable();
             $table->timestamps();
         });

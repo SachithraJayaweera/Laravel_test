@@ -18,9 +18,11 @@
 
 </head>
 
+
     <div class="container">
 
-        <h1>ORDER</h1>     
+        <h1>ORDER</h1>    
+
         <form>
 
             <div style="display: flex; flex-direction: row;">
@@ -29,6 +31,7 @@
                 <div style="display: flex; flex-direction: column;">
 
                     <div class="form-group;" style="display: flex; flex-direction: row; margin : 10px;">
+                        
                         <label for="id">Order Number : </label>
 
                         @foreach($uniqueOrderNumber as $order)
@@ -68,18 +71,17 @@
                             <th>Amount</th>
                         </tr>
                     </thead>
-    
-                    <tbody>
-    
-                        @foreach($orderNumber as $order)
 
+                    <tbody>
+
+                        @foreach($orderNumber as $order)
                         <tr>
                             <td>{{$order["product_name"]}}</td>
                             <td>{{$order["product_code"]}}</td>
                             <td>{{$order["price"]}}</td>
                             <td>{{$order["quantity"]}}</td>
                             <td>{{$order["free"]}}</td>
-                            <td>{{$order["amount"]}}</td>
+                            <td style="text-align: left;">{{$order["amount"]}}</td>
                         </tr>
                         @endforeach
                         
@@ -96,7 +98,6 @@
                 <p>{{ $order['net_amount'] }}</p>
                 <!-- Access other attributes as needed -->
                 @endforeach --}}
-
                 {{-- <p>Net Amount: {{ $uniqueOrders->first()->net_amount }}</p> --}}
                 <p>Net Amount : {{ $order->net_amount}}.00</p> <br>  
                 {{-- <button onclick="printPage()" class="btn btn-primary no-print">Print</button> --}}

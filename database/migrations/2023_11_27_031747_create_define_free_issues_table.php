@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer("free_quantity");
             $table->integer("lower_limit");
             $table->integer("upper_limit");
+            $table->float("weight_volume");
             $table->decimal('ratio', 8, 2)->nullable();
             $table->timestamps();
         });

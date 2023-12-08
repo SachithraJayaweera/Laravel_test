@@ -60,7 +60,18 @@ Route::post('/defineDiscounts/save', [App\Http\Controllers\DefineDiscountsContro
 Route::get('/getOrderDetails', [App\Http\Controllers\OderViewController::class, 'getOrderDetails'])->name('getOrderDetails');
 Route::get('/exportPdf/{order_number}', [App\Http\Controllers\ViewIndividualOrderController::class, 'exportPdf'])->name('exportPdf');
 Route::get('/exportPdf/{order_number}', [App\Http\Controllers\OderViewController::class, 'exportPdf'])->name('exportPdf');
-//Route::get('/viewIndividualOrder/{order_number}', [App\Http\Controllers\OderViewController::class, 'viewIndividualOrder'])->name('viewIndividualOrder');
+
+
+Route::get('/export-pdf-multiple/{order_number}', [App\Http\Controllers\OderViewController::class, 'exportPdfMultiple'])->name('exportPdfMultiple');
+Route::get('/viewSku', [App\Http\Controllers\AddSkuController::class, 'viewSku'])->name('viewSku');
+Route::get('/editSku/{skuid}', [App\Http\Controllers\AddSkuController::class, 'editSku'])->name('editSku');
+Route::put('/updateSku/{skuid}', [App\Http\Controllers\AddSkuController::class, 'updateSku'])->name('updateSku');
+
+Route::get('/download-template', [App\Http\Controllers\AddSkuController::class, 'downloadTemplate'])->name('download.template');
+Route::post('/upload-csv', [App\Http\Controllers\AddSkuController::class, 'uploadCsv'])->name('upload.csv');
+Route::get('/filterDataName', [App\Http\Controllers\OderViewController::class, 'filterDataName'])->name('filterDataName');
+
+
 });
 
 

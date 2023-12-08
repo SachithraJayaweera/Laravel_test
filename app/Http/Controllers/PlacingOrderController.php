@@ -12,9 +12,9 @@ use App\Models\defineFreeIssues;
 
 class PlacingOrderController extends Controller
 {
-
     public function placingOrder()
     {
+        
         $users = AddUser::all();
         $skus = AddSku::all();
         $issues = defineFreeIssues::all();
@@ -30,25 +30,29 @@ class PlacingOrderController extends Controller
             // If there is a last order number, increment it by 1
             $nextOrderNumber = $lastOrder->order_number + 1;
         }
-        return view('placingorder',['users' => $users, 'skus'=>$skus, 'issues'=>$issues, 'nextOrderNumber'=>$nextOrderNumber, 'def_skus' => $def_skus, 'def_discounts'=>$def_discounts, 'discounts'=>$discounts]);
-        
+
+
+        return view('placingorder', ['users' => $users, 'skus' => $skus, 'issues' => $issues, 'nextOrderNumber' => $nextOrderNumber, 'def_skus' => $def_skus, 'def_discounts' => $def_discounts, 'discounts' => $discounts]);
+    
     }
 
 
+    
     public function save(Request $request)
     {
-    $tableData = $request->input('tableData');
-    $decodedTableData = json_decode($tableData, true);
+        $tableData = $request->input('tableData');
+        $decodedTableData = json_decode($tableData, true);
 
-    // Filter the table data to keep only rows with a quantity value
-    $filteredTableData = array_filter($decodedTableData, function ($row) {
-        return isset($row['quantity']) && !empty($row['quantity']);
-    });
+        // Filter the table data to keep only rows with a quantity value
+        $filteredTableData = array_filter($decodedTableData, function ($row) {
+            return isset($row['quantity']) && !empty($row['quantity']);
+        });
 
-    foreach ($filteredTableData as $row) {
-        // Assuming you have a model named 'PlacingOrder' to represent the table data
-        //if(($row['customer_name'])){
+        foreach ($filteredTableData as $row) {
+            // Assuming you have a model named 'PlacingOrder' to represent the table data
+
             PlacingOrder::create([
+
                 'customer_name' => $row['customer_name'],
                 'order_number' => $row['order_number'],
                 'product_name' => $row['product_name'],
@@ -58,48 +62,27 @@ class PlacingOrderController extends Controller
                 'free' => $row['free'],
                 'amount' => $row['amount'],
                 'net_amount' => $row['net_amount'],
+                'total_count' => $row['total_count']
+
             ]);
 
-           // return response()->json(['message' => 'Table data saved successfully']);
-        //}else{
 
-          //  return response()->json(['message' => 'enter the customer name first']);
-       // }
+            // Fetch the 'AddSku' row based on 'sku_code'
+            $existingAddSkuData = AddSku::where('sku_code', $row['product_code'])->first();
+
+            if ($existingAddSkuData) {
+                // Extract 'weight_volume' from fetched row and update it
+                $weightVolume = $existingAddSkuData->weight_volume ?? 0;
+                $weightVolume -= $row['total_count'];
+
+                // Update the 'weight_volume' column in the 'addSku' table
+                $existingAddSkuData->update(['weight_volume' => $weightVolume]);
+            }
+
+        }
+
+        return response()->json(['message' => 'Table data saved successfully']);
 
     }
-
-     return response()->json(['message' => 'Table data saved successfully']);
-    }
-
-
-
-
-    // public function save(Request $request)
-    // {
-    //     $tableData = $request->input('tableData'); // Assuming the name attribute for your table data is 'tableData'
-    //     $decodedTableData = json_decode($tableData, true);
-
-    //     //dd($decodedTableData);
-
-    //     foreach ($decodedTableData as $row) {
-    //         // Assuming you have a model named 'Order' to represent the table data
-
-    //         placingOrder::create([
-    //             'customer_name' => $row['customer_name'],
-    //             'order_number' => $row['order_number'],
-    //             'product_name' => $row['product_name'],
-    //             'product_code' => $row['product_code'],
-    //             'price' => $row['price'],
-    //             'quantity' => $row['quantity'],
-    //             'free' => $row['free'],
-    //             'amount' => $row['amount'],
-    //             'net_amount' => $row['net_amount'],
-    //         ]);
-
-    // }
-
-    // return response()->json(['message' => 'Table data saved successfully']);
-    
-    // }
 
 }

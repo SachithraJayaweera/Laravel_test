@@ -32,6 +32,7 @@ class ViewPoController extends Controller
         return view('viewpo',['regions'=> $regions, 'territory'=>$territory, 'po_data' => $po_data]);
     }
 
+    
     public function filterData(Request $request){
         $selectedRegion = $request->input('region'); 
         // Fetch filtered data based on the selected region (use your logic here)

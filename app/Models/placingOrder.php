@@ -10,6 +10,7 @@ class placingOrder extends Model
     use HasFactory;
 
     protected $fillable = [
-        "customer_name","order_number","net_amount","product_name","product_code", "price", "quantity","free","amount"
+        "customer_name","order_number","net_amount","product_name","product_code", "price", "quantity","free","amount","total_count"
     ];
 }
+

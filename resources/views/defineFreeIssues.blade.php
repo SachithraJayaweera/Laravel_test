@@ -33,7 +33,7 @@
                     @foreach ($skus as $sku)
 
                         @if(!in_array($sku->sku_name, $def_skus))
-                        <option value = "{{$sku->sku_name}}" data-price="{{$sku->distributor_price }}" data-code="{{$sku->sku_code }}">{{ $sku->sku_name}}</option>
+                        <option value ="{{$sku->sku_name}}" data-price="{{$sku->distributor_price }}" data-code="{{$sku->sku_code }}" data-weight_volume="{{$sku->weight_volume }}">{{ $sku->sku_name}}</option>
                         @endif
 
                     @endforeach
@@ -63,14 +63,13 @@
                 
                 <label for="productPrice">Product price</label>
                 <input type="text" class="form-control" id="product_price" name="product_price" placeholder="Auto Selected">
-                
-                {{-- <select type="text" class="form-control" id="product_price" name="product_price" placeholder="Select">
-                       
-                    @foreach ($skus as $skus)
-                    <option>{{ $skus->distributor_price}}</option>
-                    @endforeach
 
-                </select> --}}
+            </div>
+
+            <div class="form-group" style="display: none;">
+                
+                <label for="weight_volume">Weight Volume</label>
+                <input type="text" class="form-control" id="weight_volume" name="weight_volume" placeholder="Auto Selected">
 
             </div>
 
@@ -115,6 +114,7 @@
     <script>
 
         document.addEventListener('DOMContentLoaded', function() {
+
             var dropdown = document.getElementById('pu_product');
             var input1 = document.getElementById('free_product');
     
@@ -124,12 +124,17 @@
         });
 
             $(document).ready(function() {
+
                 $('#pu_product').change(function() {
                     var selectedPrice = $(this).find(':selected').data('price');
                     var selectedCode = $(this).find(':selected').data('code');
+                    var selectedVolume = $(this).find(':selected').data('weight_volume');
                     $('#product_price').val(selectedPrice);
                     $('#product_code').val(selectedCode);
+                    $('#weight_volume').val(selectedVolume);
+
             });
+
         });
 
     </script>

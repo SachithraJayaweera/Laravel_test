@@ -4,8 +4,34 @@
 
 <div class="container">
     <h1>ADD SKU</h1>
+
+
+  <hr>
+    <div class="csv-controller">
+
+        <h3>Insert Data using csv file</h3>
+
+        {{-- <a href="{{ route('download.template') }}">Download Template CSV</a> --}}
+        <a href="{{ route('download.template') }}" class="btn btn-primary"  style="background-color: green; border: none;">Download Template CSV</a> 
+        <br>
+        <br>
+        <form method="POST" action="{{ route('upload.csv') }}" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="csv_file" accept=".csv">
+            <button type="submit">Upload CSV</button>
+        </form>
+        
+    </div>
+
+    <br>
+    <br>
+
+    <hr>
+
     <form method="POST" action="{{route("addsku.save")}}">
         @csrf
+        <h3>Insert Data using form</h3>
+
         <div class="form-group">
             <label for="zoneCode">SKU ID</label>
             <input type="number" class="form-control" id="sku_id" placeholder="Automatically" name="sku_id" readonly>
@@ -13,7 +39,7 @@
                 <option>Automatically</option>
             </select> --}}
         </div>
-
+ 
         <div class="form-group">
             <label for="sku_code">SKU Code</label>
             <input type="text" class="form-control" id="sku_code" name="sku_code" required>
@@ -40,9 +66,10 @@
                 <option value="ml">Milliliters</option>
             </select> --}}
         </div>
-        <button type="submit" class="btn btn-success" style="background-color: green; border: none; margin-top:10px;">Save</button>
+        <button type="submit" class="btn btn-success" style="background-color: green; border: none; margin-top:10px;">SAVE</button>
     </form>
-      
+      <br>
+    <a href="{{ route('viewSku') }}" class="btn btn-primary" style="background-color: green; border: none;">VIEW</a> 
  </div>
 
 @endsection

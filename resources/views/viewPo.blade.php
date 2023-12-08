@@ -84,12 +84,16 @@
             </div>
         </form>
 
+
+
     </div>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
 
     $(document).ready(function () {
+        
     $('#region').on('change', function () {
         var selectedRegion = $(this).val();
 
@@ -108,6 +112,8 @@
         });
     });
 
+
+    
     $('#po_territory').on('change', function () {
         var selectedTerritory = $(this).val();
 
@@ -118,6 +124,7 @@
             data: { territory: selectedTerritory },
             success: function (response) {
                 // Update table with filtered data
+                
                 updateTable(response);
             },
             error: function (error) {

@@ -5,7 +5,8 @@
 <div class="container">
     <h1>Placing Order</h1>
 
-    <form method="POST" action="{{route("placingorder.save")}}">
+    
+    <form id="myForm" method="POST" action="{{route("placingorder.save")}}">
 
         @csrf
         <div style="display: flex; flex-direction: row;">
@@ -14,7 +15,7 @@
                     <label for="customer_name">Customer Name:</label>
 
                     <select type="text" class="form-control" id="customer_no" name="customer_no" placeholder="Select">
-                        
+                        <option value="" disabled selected>Select</option> <!-- Placeholder option -->
                         @foreach ($users as $user)
                         <option>{{ $user->name }}</option>
                         @endforeach
@@ -49,11 +50,13 @@
                         <th style="display: none;">Upper Limit</th>
                         <th>Product Code</th>
                         <th>Price</th>
+                        <th>Available Quantity</th>
                         <th>Quantity</th>
                         <th>Free</th>
                         <th>Amount</th>
                         <th>With Discount</th>
                         <th style="display: none;">Net Amount</th>
+                        <th style="display: none;">total product count</th>
                     </tr>
                 </thead>
 
@@ -73,7 +76,7 @@
                     <td style="display: none;">{{ $issue->upper_limit }}</td>
                     <td name="product_code">{{ $issue->product_code }}</td>
                     <td name="price">{{ $issue->product_price }}</td>
-
+                    <td name="weight_volume">{{$issue->weight_volume}}</td>
                     <td name="quantity">
                         <input type="number" class="quantity" name="enter-qty" placeholder="min:{{ $issue->lower_limit }} max:{{ $issue->upper_limit }}" data-price="{{ $issue->product_price }}" data-ratio="{{ $issue->ratio }}" data-product-id="{{ $issue->id }}"
                          data-type="{{ $issue->type }}" data-free_quantity="{{ $issue->free_quantity }}" data-lower_limit="{{ $issue->lower_limit }}" data-upper_limit="{{ $issue->upper_limit }}">
@@ -83,6 +86,7 @@
                     <td name="amount" class="total" data-product-id="{{ $issue->id }}">0</td>
                     <td name="total_amount" class="total_amount" data-product-id="{{ $issue->id }}">0</td>
                     <td name="net_amount" style="display: none;"></td>
+                    <td name="total_count" class="total_count" style="display: none;">0</td>
                 </tr>
                 @endforeach 
 
@@ -102,7 +106,7 @@
                     <td style="display: none;">{{ $issue->upper_limit }}</td>
                     <td name="product_code">{{ $issue->sku_code }}</td>
                     <td name="price">{{ $issue->distributor_price }}</td>
-
+                    <td name="weight_volume">{{ $issue->weight_volume }}</td>
                     <td name="quantity">
                         <input type="number" class="quantity" name="enter-qty" placeholder="No free Issues& Discounts" data-price="{{ $issue->distributor_price }}" data-product-id="{{ $issue->skuid }}"
                         >
@@ -112,7 +116,7 @@
                     <td name="amount" class="total" data-product-id="{{ $issue->id }}">0</td>
                     <td name="total_amount" class="total_amount" data-product-id="{{ $issue->id }}">0</td>
                     <td name="net_amount" style="display: none;"></td>
-
+                    <td name="total_count" class="total_count" style="display: none;">0</td>
                 </tr>
                 @endif
 
@@ -132,7 +136,7 @@
                     <td style="display: none;">{{ $issue->upper_limit }}</td>
                     <td name="product_code">{{ $issue->product_code }}</td>
                     <td name="price">{{ $issue->product_price }}</td>
-
+                    <td name="weight_volume">{{$issue->weight_volume}}</td>
                     <td name="quantity">
                         <input type="number" class="quantity" name="enter-qty" placeholder="discount {{ $issue->discount}}% > {{ $issue->pu_quantity}}"
                          data-price="{{ $issue->product_price }}" data-ratio="{{ $issue->ratio }}" data-product-id="{{ $issue->id }}"
@@ -143,6 +147,7 @@
                     <td name="amount" class="total" data-product-id="{{ $issue->id }}">0</td>
                     <td name="total_amount" class="total_amount" data-product-id="{{ $issue->id }}">0</td>
                     <td name="net_amount" style="display: none;"></td>
+                    <td name="total_count" class="total_count" style="display: none;">0</td>
                 </tr>
                 @endforeach 
 
@@ -166,8 +171,13 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    $(document).ready(function () {
-        $('#customer_no').change(function () {
+
+
+
+$(document).ready(function () {
+
+
+    $('#customer_no').change(function () {
             var selectedCustomer = $(this).val();
             var selectedCustomerName = $(this).find('option:selected').text();
             
@@ -177,45 +187,49 @@
                 //$(this).find('td:eq(1)').text(selectedCustomer); // Update Order Number column (assuming it's the second column)
             });
         });
-    });
 
-
-$(document).ready(function () {
 
     $('#submitBtn').click(function () {
-        var dataArray = [];
 
-        $('#orderTable tbody tr').each(function () {
-            var row = {};
-            $(this).find('td').each(function () {
-                var columnName = $(this).attr('name');
-                var columnValues;
+    if ($('#customer_no').val() === null || $('#customer_no').val() === '') {
+        alert('Please select a customer.');
+        event.preventDefault(); // Prevent form submission
+        window.location.href = "/placingorder"; // Replace with your route
 
-                // Check if the td contains an input field
-                var $input = $(this).find('input');
-                if ($input.length > 0) {
-                    columnValue = $input.val().trim();
-                } else {
-                    columnValue = $(this).text().trim();
-                }
+    }
 
-                row[columnName] = columnValue;
-            });
+    var dataArray = [];
 
-            dataArray.push(row);
+    $('#orderTable tbody tr').each(function () {
+        var row = {};
+        $(this).find('td').each(function () {
+            var columnName = $(this).attr('name');
+            var columnValues;
+
+        // Check if the td contains an input field
+            var $input = $(this).find('input');
+            if ($input.length > 0) {
+                columnValue = $input.val().trim();
+            } else {
+                columnValue = $(this).text().trim();
+            }
+
+            row[columnName] = columnValue;
         });
 
-        // Update the hidden input field with the table data
-        $('#tableDataInput').val(JSON.stringify(dataArray));
-
-        // Now, submit the form
-        $('form').submit();
-
+        dataArray.push(row);
     });
-});
+
+    // Update the hidden input field with the table data
+    $('#tableDataInput').val(JSON.stringify(dataArray));
+
+    // Now, submit the form
+    $('form').submit();
+
+    }); 
 
 
-    $(document).ready(function () {
+
 
         // Function to update total sum and net_amount column
     function updateTotalSum() {
@@ -237,8 +251,6 @@ $(document).ready(function () {
     updateTotalSum();
 
 
-
-
     // Select all quantity input elements with the class "quantity"
     $(".quantity").on("input", function () {
 
@@ -252,6 +264,7 @@ $(document).ready(function () {
         var upper_limit = parseInt($(this).data('upper_limit'));
         var discount_level = parseFloat($(this).data('dis_level'));
         var quantity = parseFloat($(this).val()) || 0; // Fetch value from input field
+        var freeInt = 0;
 
         if (!isNaN(quantity) && !isNaN(price)) {
 
@@ -265,7 +278,6 @@ $(document).ready(function () {
                     $row.find(".total_amount").text(disc_price.toFixed(2));
                 }else{
                     $row.find(".total_amount").text(amount.toFixed(2));
-
                 }
 
 
@@ -276,22 +288,34 @@ $(document).ready(function () {
 
                     if (quantity < lower_limit) {
                         $row.find(".units").text(0);
+                        //$row.find(".total_count").text(quantity.toFixed(2));
 
                     } else if (quantity > lower_limit > upper_limit) {
                         var free = quantity * ratio;
                         var freeInt = parseInt(free);
                         $row.find(".units").text(freeInt.toFixed(2));
 
+                        // var total_count = quantity + freeInt;
+                        // $row.find(".total_count").text(total_count.toFixed(2));
+
                     } else if(quantity > upper_limit) {
                         var free_max = upper_limit * ratio;
-                        var freeInt_max = parseInt(free_max);
-                        $row.find(".units").text(freeInt_max);
+                        var freeInt = parseInt(free_max);
+                        $row.find(".units").text(freeInt);
+                        var total_count = quantity + freeInt;
+
+                    //    var total_count = quantity + freeInt;
+                    //    $row.find(".total_count").text(total_count.toFixed(2));
                     }
 
                 } else if (type == 1) {
                     var free = free_quantity;
                     $row.find(".units").text(free.toFixed(2));
                 }
+
+
+            var total_count = quantity + freeInt;
+            $row.find(".total_count").text(total_count.toFixed(2));
 
             var totalSum = 0.00;
 
@@ -303,6 +327,7 @@ $(document).ready(function () {
 
         }
     });
+
 
 });
 

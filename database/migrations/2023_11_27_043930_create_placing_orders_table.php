@@ -9,6 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    
     public function up(): void
     {
         Schema::create('placing_orders', function (Blueprint $table) {
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->integer("free");
             $table->float("amount");
             $table->float("net_amount")->nullable();
+            $table->float("total_count");
             $table->timestamps();
         });
 

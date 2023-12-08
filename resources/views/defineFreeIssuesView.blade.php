@@ -24,6 +24,7 @@
                         <th>FREE QUANTITY</th>
                         <th>LOWER LIMIT</th>
                         <th>UPPER LIMIT </th>
+                        <th>weight_volume</th>
                     </tr>
                 </thead>
 
@@ -40,6 +41,7 @@
                         <td>{{ $df["free_quantity"] }}</td>
                         <td>{{ $df["lower_limit"] }}</td>
                         <td>{{ $df["upper_limit"] }}</td>
+                        <td></td>
 
                     </tr>
                     @endforeach
